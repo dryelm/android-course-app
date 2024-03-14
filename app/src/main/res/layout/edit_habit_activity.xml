@@ -79,14 +79,14 @@
 
 
         <TextView
-            android:layout_width="165dp"
             android:id="@+id/labelForDays"
+            android:layout_width="165dp"
             android:layout_height="wrap_content"
             android:text="Периодичность:"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@id/daysForHabit"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/labelForCount" />
+            app:layout_constraintTop_toBottomOf="@+id/countOfRepeats" />
 
         <EditText
             android:id="@+id/daysForHabit"
