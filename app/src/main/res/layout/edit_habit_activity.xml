@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditHabitActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/nameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:hint="Название привычки"
+            android:inputType="text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/descriptionEditText"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Описание"
+            app:layout_constraintStart_toEndOf="@id/nameEditText"
+            app:layout_constraintTop_toBottomOf="@id/nameEditText" />
+
+        <Spinner
+            android:id="@+id/prioritySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            app:layout_constraintStart_toEndOf="@id/descriptionEditText"
+            app:layout_constraintTop_toBottomOf="@id/descriptionEditText" />
+
+        <RadioGroup
+            android:id="@+id/typeRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            app:layout_constraintStart_toEndOf="@id/prioritySpinner"
+            app:layout_constraintTop_toBottomOf="@id/prioritySpinner">
+
+            <RadioButton
+                android:id="@+id/goodRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Хорошая привычка" />
+
+            <RadioButton
+                android:id="@+id/badRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Плохая привычка" />
+        </RadioGroup>
+
+
+        <TextView
+            android:id="@+id/labelForCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Количество выполнений:"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@id/countOfRepeats"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/typeRadioGroup" />
+
+        <EditText
+            android:id="@+id/countOfRepeats"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="10dp"
+            android:inputType="number"
+            app:layout_constraintStart_toEndOf="@id/labelForCount"
+            app:layout_constraintTop_toBottomOf="@id/typeRadioGroup"
+            android:hint="0-100" />
+
+
+        <TextView
+            android:layout_width="165dp"
+            android:id="@+id/labelForDays"
+            android:layout_height="wrap_content"
+            android:text="Периодичность:"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@id/daysForHabit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelForCount" />
+
+        <EditText
+            android:id="@+id/daysForHabit"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:inputType="number"
+            app:layout_constraintStart_toStartOf="@+id/countOfRepeats"
+            app:layout_constraintTop_toBottomOf="@id/countOfRepeats"
+            android:hint="0-100"/>
+
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Сохранить"
+            app:layout_constraintStart_toStartOf="@+id/daysForHabit"
+            app:layout_constraintTop_toBottomOf="@id/daysForHabit"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
