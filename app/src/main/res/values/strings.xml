@@ -1,11 +1,24 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">My Application</string>
-    <string name="title_activity_second">SecondActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="good_habit">Хорошая привычка</string>
+    <string name="bad_habit">Плохая привычка</string>
+    <string name="label_for_count">Количество выполнений:</string>
+    <string name="hint_for_count_of_repeats">0–100</string>
+    <string name="frequency">Периодичность:</string>
+    <string name="save">Сохранить</string>
+    <string name="hint_for_days_habit">0–100</string>
+    <string name="name_edit_text">Название привычки</string>
+    <string name="description">Описание</string>
+    <string name="about_app">Информация о приложении</string>
+    <string name="home_page">Домашний экран</string>
+    <string name="open_drawer" tools:ignore="ExtraTranslation">Открыта навигация</string>
+    <string name="close_drawer" tools:ignore="ExtraTranslation">Закрыта навигация</string>
+    <string name="about_app_text">"\n            Приложение Трекер привычек\n            Разработчик: Гилемшин Ринат\n        "</string>
 
     <string-array name="priorities">
         <item>Low</item>

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".EditHabitActivity">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -12,20 +10,20 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/nameEditText"
             android:layout_width="match_parent"
             android:layout_height="58dp"
-            android:hint="Название привычки"
+            android:hint="@string/name_edit_text"
             android:inputType="text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/descriptionEditText"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:hint="Описание"
+            android:hint="@string/description"
             app:layout_constraintStart_toEndOf="@id/nameEditText"
             app:layout_constraintTop_toBottomOf="@id/nameEditText" />
 
@@ -47,13 +45,13 @@
                 android:id="@+id/goodRadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Хорошая привычка" />
+                android:text="@string/good_habit" />
 
             <RadioButton
                 android:id="@+id/badRadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Плохая привычка" />
+                android:text="@string/bad_habit" />
         </RadioGroup>
 
 
@@ -61,13 +59,13 @@
             android:id="@+id/labelForCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Количество выполнений:"
+            android:text="@string/label_for_count"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@id/countOfRepeats"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/typeRadioGroup" />
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/countOfRepeats"
             android:layout_width="100dp"
             android:layout_height="70dp"
@@ -75,27 +73,27 @@
             android:inputType="number"
             app:layout_constraintStart_toEndOf="@id/labelForCount"
             app:layout_constraintTop_toBottomOf="@id/typeRadioGroup"
-            android:hint="0-100" />
+            android:hint="@string/hint_for_count_of_repeats" />
 
 
         <TextView
             android:id="@+id/labelForDays"
             android:layout_width="165dp"
             android:layout_height="wrap_content"
-            android:text="Периодичность:"
+            android:text="@string/frequency"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@id/daysForHabit"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/countOfRepeats" />
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/daysForHabit"
             android:layout_width="100dp"
             android:layout_height="70dp"
             android:inputType="number"
-            app:layout_constraintStart_toStartOf="@+id/countOfRepeats"
+            app:layout_constraintStart_toStartOf="@id/countOfRepeats"
             app:layout_constraintTop_toBottomOf="@id/countOfRepeats"
-            android:hint="0-100"/>
+            android:hint="@string/hint_for_days_habit"/>
 
 
         <Button
@@ -103,9 +101,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Сохранить"
-            app:layout_constraintStart_toStartOf="@+id/daysForHabit"
+            android:text="@string/save"
+            app:layout_constraintStart_toStartOf="@id/daysForHabit"
             app:layout_constraintTop_toBottomOf="@id/daysForHabit"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </ScrollView>
