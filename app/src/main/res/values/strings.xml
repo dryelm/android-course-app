@@ -2,7 +2,6 @@
     <string name="app_name">My Application</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="good_habit">Хорошая привычка</string>
@@ -17,12 +16,29 @@
     <string name="about_app">Информация о приложении</string>
     <string name="home_page">Домашний экран</string>
     <string name="open_drawer" tools:ignore="ExtraTranslation">Открыта навигация</string>
-    <string name="close_drawer" tools:ignore="ExtraTranslation">Закрыта навигация</string>
+    <string name="close_drawer" tools:override="true" tools:ignore="ExtraTranslation">Закрыта навигация</string>
     <string name="about_app_text">"\n            Приложение Трекер привычек\n            Разработчик: Гилемшин Ринат\n        "</string>
+    <string name="bad_habits_interface_word">Плохие привычки</string>
+    <string name="good_habits_interface_word">Хорошие привычки</string>
 
     <string-array name="priorities">
         <item>Low</item>
         <item>Medium</item>
         <item>High</item>
     </string-array>
+
+    <string name="low_priority_word">Low</string>
+    <string name="medium_priority_word">Medium</string>
+    <string name="high_priority_word">High</string>
+    <string name="good_habit_word">Good</string>
+    <string name="bad_habit_word">Bad</string>
+    <string name="blank_name_habit_error">Не написали название</string>
+    <string name="blank_description_habit_error">Не написали описание</string>
+    <string name="blank_habit_type_error">Не выбрали тип привычки</string>
+    <string name="blank_habit_priority_error">Не выбрали приоритет</string>
+    <string name="blank_days_habit_error">Не указали количество дней</string>
+    <string name="blank_repeats_habit_error">Не указали количество повторений</string>
+    <string name="repeats_and_days_view">%1$s раз. Через каждые %2$s дней(день)</string>
+    <string name="search_habit_hint">Поиск по названию</string>
+    <string name="add_habit_button">add habit button</string>
 </resources>

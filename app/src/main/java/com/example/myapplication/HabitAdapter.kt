@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.bundle_keys.BundleKeys
 import com.example.myapplication.fragments.EditHabitFragment
 
 class HabitAdapter(private val habits: ArrayList<Habit>, private val fragment: Fragment) : RecyclerView.Adapter<HabitAdapter.HabitViewHolder>() {
@@ -30,12 +30,12 @@ class HabitAdapter(private val habits: ArrayList<Habit>, private val fragment: F
 
         holder.view.setOnClickListener {
             val bundle = Bundle().apply {
-                putParcelableArrayList("habits", habits)
-                putInt("index", position)
+                putInt(BundleKeys.index, position)
             }
             val newFragment = EditHabitFragment.newInstance(bundle)
             fragment.requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.container, newFragment)
+                .addToBackStack(null)
                 .commit()
         }
 
@@ -43,7 +43,7 @@ class HabitAdapter(private val habits: ArrayList<Habit>, private val fragment: F
         descriptionTextView.text = habit.description
         priorityTextView.text = habit.priority
         typeTextView.text = habit.type
-        frequencyTextView.setText("${habit.times} раз. Через каждые ${habit.days} дней(день)");
+        frequencyTextView.text = holder.itemView.context.getString(R.string.repeats_and_days_view).format(habit.times, habit.days)
     }
 
 

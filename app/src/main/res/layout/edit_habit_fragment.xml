@@ -24,12 +24,14 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:hint="@string/description"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/nameEditText"
             app:layout_constraintTop_toBottomOf="@id/nameEditText" />
 
         <Spinner
             android:id="@+id/prioritySpinner"
             android:layout_width="match_parent"
+            android:focusable="true"
             android:layout_height="55dp"
             app:layout_constraintStart_toEndOf="@id/descriptionEditText"
             app:layout_constraintTop_toBottomOf="@id/descriptionEditText" />
@@ -37,6 +39,7 @@
         <RadioGroup
             android:id="@+id/typeRadioGroup"
             android:layout_width="match_parent"
+            android:focusable="true"
             android:layout_height="120dp"
             app:layout_constraintStart_toEndOf="@id/prioritySpinner"
             app:layout_constraintTop_toBottomOf="@id/prioritySpinner">
@@ -102,8 +105,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/save"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/daysForHabit"
-            app:layout_constraintTop_toBottomOf="@id/daysForHabit"/>
+            app:layout_constraintTop_toBottomOf="@id/daysForHabit" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

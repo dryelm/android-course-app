@@ -7,10 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
-import com.example.myapplication.callbacks.InfoCallback
 
 class InfoFragment : Fragment() {
-    var callback: InfoCallback? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -22,11 +20,6 @@ class InfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val textView = view.findViewById<TextView>(R.id.info_text_view)
         textView.text = getString(R.string.about_app_text).trimIndent()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        callback?.onDestroy()
     }
 
     companion object {

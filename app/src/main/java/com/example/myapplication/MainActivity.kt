@@ -1,13 +1,12 @@
 package com.example.myapplication
 
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import com.example.myapplication.callbacks.HabitCallback
-import com.example.myapplication.callbacks.InfoCallback
+import com.example.myapplication.bundle_keys.BundleKeys
 import com.example.myapplication.fragments.InfoFragment
 import com.example.myapplication.fragments.MainFragment
 import com.google.android.material.navigation.NavigationView
@@ -17,13 +16,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val toolbar = findViewById<Toolbar>(R.id.my_toolbar)
+        toolbar.title = ""
+        setSupportActionBar(toolbar)
         val navigationDrawerLayout = findViewById<DrawerLayout>(R.id.navigationDrawerLayout)
-        val drawerToggle = ActionBarDrawerToggle(this, navigationDrawerLayout,
+        val drawerToggle = ActionBarDrawerToggle(this, navigationDrawerLayout, toolbar,
             R.string.open_drawer,
             R.string.close_drawer)
         navigationDrawerLayout.addDrawerListener(drawerToggle)
 
         drawerToggle.syncState()
+
         if (savedInstanceState == null) {
             setFragment(navigationDrawerLayout)
         }
@@ -44,6 +47,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_info -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.container, infoFragment)
+                        .addToBackStack(null)
                         .commit()
                 }
             }
@@ -57,16 +61,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun createMainFragment(): MainFragment {
         val bundle = Bundle().apply {
-            putParcelableArrayList("habits", habitList)
+            putParcelableArrayList(BundleKeys.habits, habitList)
         }
-        val fragment = MainFragment.newInstance(bundle)
-        fragment.callback = object : HabitCallback {
-            override fun onDestroy(habits: ArrayList<Habit>) {
-                habitList = habits
-            }
-
-        }
-        return fragment
+        return MainFragment.newInstance(bundle)
     }
 }
 

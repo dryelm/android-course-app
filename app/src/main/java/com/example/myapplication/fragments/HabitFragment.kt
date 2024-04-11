@@ -1,7 +1,6 @@
 package com.example.myapplication.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.Habit
 import com.example.myapplication.HabitAdapter
 import com.example.myapplication.R
+import com.example.myapplication.bundle_keys.BundleKeys
 
 class HabitFragment : Fragment() {
     private var habits: ArrayList<Habit> = ArrayList()
@@ -25,8 +25,7 @@ class HabitFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        habits = arguments?.getParcelableArrayList("habits") ?: ArrayList()
-        Log.d(this.toString(), habits.toString())
+        habits = arguments?.getParcelableArrayList(BundleKeys.habits) ?: ArrayList()
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -36,7 +35,7 @@ class HabitFragment : Fragment() {
     companion object {
         fun newInstance(habits: List<Habit>) = HabitFragment().apply {
             arguments = Bundle().apply {
-                putParcelableArrayList("habits", ArrayList(habits))
+                putParcelableArrayList(BundleKeys.habits, ArrayList(habits))
             }
         }
     }
