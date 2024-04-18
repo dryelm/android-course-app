@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,8 +31,10 @@ class HabitAdapter(private val habits: ArrayList<Habit>, private val fragment: F
 
         holder.view.setOnClickListener {
             val bundle = Bundle().apply {
-                putInt(BundleKeys.index, position)
+                putInt(BundleKeys.id, habit.id!!)
             }
+
+            Log.d(this.toString(), bundle.toString())
             val newFragment = EditHabitFragment.newInstance(bundle)
             fragment.requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.container, newFragment)

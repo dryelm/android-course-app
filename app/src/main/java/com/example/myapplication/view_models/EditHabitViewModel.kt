@@ -1,29 +1,39 @@
 package com.example.myapplication.view_models
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.myapplication.Habit
 import com.example.myapplication.models.HabitsModel
 
-class EditHabitViewModel : ViewModel() {
-    private val mutableHabitList: MutableLiveData<List<Habit>?> = MutableLiveData()
+class EditHabitViewModel(application: Application) : AndroidViewModel(application) {
+    private val mutableHabit: MutableLiveData<Habit?> = MutableLiveData()
 
-    private val habitsModel: HabitsModel = HabitsModel.getInstance()
+    val habitLiveData: LiveData<Habit?> = mutableHabit
 
-    init {
-       loadHabits()
+    private val habitsModel: HabitsModel = HabitsModel.getInstance(application)
+
+    private fun loadHabits(lifecycleOwner: LifecycleOwner, id: Int?){
+        if (id != null) {
+            val liveData = habitsModel.getById(id)
+            liveData.observe(lifecycleOwner) {
+
+                mutableHabit.value = liveData.value?.let { Habit.fromStorageEntity(it) }
+            }
+        }
     }
-    private fun loadHabits(){
-        mutableHabitList.value = habitsModel.getAll()
-    }
-    fun getHabit(index: Int) = mutableHabitList.value?.get(index)
 
     fun saveHabit(habit: Habit) {
         habitsModel.add(habit)
     }
 
-    fun editHabit(index: Int, habit: Habit) {
-        habitsModel.replaceByIndex(index, habit)
+    fun editHabit(habit: Habit) {
+        habitsModel.update(habit)
+    }
+
+    fun onViewCreated(lifecycleOwner: LifecycleOwner, id: Int?) {
+        loadHabits(lifecycleOwner, id)
     }
 }

@@ -1,6 +1,7 @@
 package com.example.myapplication.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,6 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.Habit
 import com.example.myapplication.R
@@ -19,17 +19,12 @@ import com.example.myapplication.bundle_keys.BundleKeys
 import com.example.myapplication.view_models.EditHabitViewModel
 
 class EditHabitFragment : Fragment() {
-    private var index: Int? = null
+    private var id: Int? = null
     private lateinit var viewModel: EditHabitViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(
-            this,
-            object : ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return EditHabitViewModel() as T
-                }})[EditHabitViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity())[EditHabitViewModel::class.java]
 
     }
 
@@ -44,10 +39,12 @@ class EditHabitFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        if (arguments?.containsKey(BundleKeys.index) == true) {
-            index = arguments?.getInt(BundleKeys.index)
+        if (arguments?.containsKey(BundleKeys.id) == true) {
+            id = arguments?.getInt(BundleKeys.id)
+            Log.d(this.toString(), id.toString())
         }
+
+        viewModel.onViewCreated(viewLifecycleOwner, id)
 
         configurePrioritySpinner(view)
         fillFieldsWhenEdit(view)
@@ -70,7 +67,7 @@ class EditHabitFragment : Fragment() {
 
 
     private fun fillFieldsWhenEdit(view: View) {
-        if (index != null) {
+        if (id != null) {
             val nameEditText = view.findViewById<AppCompatEditText>(R.id.nameEditText)
             val descriptionEditText = view.findViewById<AppCompatEditText>(R.id.descriptionEditText)
             val prioritySpinner = view.findViewById<Spinner>(R.id.prioritySpinner)
@@ -78,26 +75,30 @@ class EditHabitFragment : Fragment() {
             val daysForHabit = view.findViewById<AppCompatEditText>(R.id.daysForHabit)
             val typeRadioGroup = view.findViewById<RadioGroup>(R.id.typeRadioGroup
             )
-            index?.let {
-                val habit = viewModel.getHabit(it)
-                nameEditText.setText(habit?.name)
-                descriptionEditText.setText(habit?.description)
-                prioritySpinner.setSelection(
-                    when (habit?.priority) {
-                        getString(R.string.low_priority_word) -> 0
-                        getString(R.string.medium_priority_word) -> 1
-                        getString(R.string.high_priority_word) -> 2
-                        else -> -1
+            id?.let {
+                val habitLiveData = viewModel.habitLiveData
+                habitLiveData.observe(viewLifecycleOwner) {
+                    val habit = it
+                    Log.d(this.toString(), habit.toString())
+                    nameEditText.setText(habit?.name)
+                    descriptionEditText.setText(habit?.description)
+                    prioritySpinner.setSelection(
+                        when (habit?.priority) {
+                            getString(R.string.low_priority_word) -> 0
+                            getString(R.string.medium_priority_word) -> 1
+                            getString(R.string.high_priority_word) -> 2
+                            else -> -1
+                        }
+                    )
+
+                    when (habit?.type) {
+                        getString(R.string.good_habit_word) -> typeRadioGroup.check(R.id.goodRadioButton)
+                        getString(R.string.bad_habit_word) -> typeRadioGroup.check(R.id.badRadioButton)
                     }
-                )
 
-                when (habit?.type) {
-                    getString(R.string.good_habit_word) -> typeRadioGroup.check(R.id.goodRadioButton)
-                    getString(R.string.bad_habit_word) -> typeRadioGroup.check(R.id.badRadioButton)
+                    countOfRepeats.setText(habit?.times.toString())
+                    daysForHabit.setText(habit?.days.toString())
                 }
-
-                countOfRepeats.setText(habit?.times.toString())
-                daysForHabit.setText(habit?.days.toString())
             }
         }
     }
@@ -175,6 +176,7 @@ class EditHabitFragment : Fragment() {
 
 
             val habit = Habit(
+                id,
                 name,
                 description,
                 priority,
@@ -183,14 +185,13 @@ class EditHabitFragment : Fragment() {
                 countOfRepeats.text.toString().toInt()
             )
 
-            if (index != null) {
-                viewModel.editHabit(index!!, habit)
+            if (id != null) {
+                viewModel.editHabit(habit)
             } else {
                 viewModel.saveHabit(habit)
             }
 
-            val fragment = MainFragment.newInstance()
-            parentFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+            parentFragmentManager.popBackStack()
         }
     }
 
