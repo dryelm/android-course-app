@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.Habit
 import com.example.myapplication.models.HabitsModel
+import com.example.myapplication.models.entity.HabitEntity
+import kotlinx.coroutines.*
 
 class EditHabitViewModel(application: Application) : AndroidViewModel(application) {
     private val mutableHabit: MutableLiveData<Habit?> = MutableLiveData()
@@ -14,6 +16,8 @@ class EditHabitViewModel(application: Application) : AndroidViewModel(applicatio
     val habitLiveData: LiveData<Habit?> = mutableHabit
 
     private val habitsModel: HabitsModel = HabitsModel.getInstance(application)
+    private val viewModelJob = Job()
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     private fun loadHabits(lifecycleOwner: LifecycleOwner, id: Int?){
         if (id != null) {
@@ -26,14 +30,27 @@ class EditHabitViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun saveHabit(habit: Habit) {
-        habitsModel.add(habit)
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                habitsModel.add(habit)
+            }
+        }
     }
 
     fun editHabit(habit: Habit) {
-        habitsModel.update(habit)
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                habitsModel.update(habit)
+            }
+        }
     }
 
     fun onViewCreated(lifecycleOwner: LifecycleOwner, id: Int?) {
         loadHabits(lifecycleOwner, id)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 }
