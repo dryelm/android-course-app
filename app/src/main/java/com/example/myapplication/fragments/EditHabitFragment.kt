@@ -17,6 +17,8 @@ import com.example.myapplication.Habit
 import com.example.myapplication.R
 import com.example.myapplication.bundle_keys.BundleKeys
 import com.example.myapplication.view_models.EditHabitViewModel
+import java.time.Instant
+import java.util.Date
 
 class EditHabitFragment : Fragment() {
     private var id: Int? = null
@@ -182,7 +184,8 @@ class EditHabitFragment : Fragment() {
                 priority,
                 type,
                 daysForHabit.text.toString().toInt(),
-                countOfRepeats.text.toString().toInt()
+                countOfRepeats.text.toString().toInt(),
+                Date.from(Instant.now())
             )
 
             if (id != null) {

@@ -12,7 +12,8 @@ data class HabitEntity(
     val priority: String,
     val type: String,
     val days: Int,
-    val times: Int
+    val times: Int,
+    val date: Int
 ) {
     companion object {
         fun toEntity(habit: Habit): HabitEntity = HabitEntity(
@@ -22,8 +23,11 @@ data class HabitEntity(
                 priority = habit.priority,
                 type = habit.type,
                 days = habit.days,
-                times = habit.times
+                times = habit.times,
+                date = habit.date.time.toInt()
             )
+
+
     }
 
 }

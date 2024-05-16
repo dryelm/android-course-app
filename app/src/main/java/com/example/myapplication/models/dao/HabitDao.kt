@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.myapplication.models.entity.HabitEntity
@@ -18,6 +19,9 @@ interface HabitDao {
 
     @Insert
     fun insert(habit: HabitEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertHabits(habits: List<HabitEntity>)
 
     @Update
     fun update(habit: HabitEntity)

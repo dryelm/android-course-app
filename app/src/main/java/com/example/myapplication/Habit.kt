@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.os.Parcelable
 import com.example.myapplication.models.entity.HabitEntity
 import kotlinx.parcelize.Parcelize
+import java.util.Date
 
 @Parcelize
 data class Habit(
@@ -12,7 +13,8 @@ data class Habit(
     val priority: String,
     val type: String,
     val days: Int,
-    val times: Int
+    val times: Int,
+    val date: Date
 ) : Parcelable {
     companion object{
         fun fromStorageEntity(habitEntity: HabitEntity): Habit =
@@ -23,7 +25,8 @@ data class Habit(
                 habitEntity.priority,
                 habitEntity.type,
                 habitEntity.days,
-                habitEntity.times
+                habitEntity.times,
+                Date(habitEntity.date.toLong())
             )
     }
 }
