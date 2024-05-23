@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -28,10 +29,12 @@ class HabitAdapter(private val habits: ArrayList<Habit>, private val fragment: F
         val priorityTextView = holder.view.findViewById<TextView>(R.id.priorityTextView)
         val typeTextView = holder.view.findViewById<TextView>(R.id.typeTextView)
         val frequencyTextView = holder.view.findViewById<TextView>(R.id.frequencyTextView)
+        val doneButton = holder.view.findViewById<Button>(R.id.checkButton)
+        doneButton.text = "Выполнить"
 
         holder.view.setOnClickListener {
             val bundle = Bundle().apply {
-                putInt(BundleKeys.id, habit.id!!)
+                putString(BundleKeys.id, habit.id!!)
             }
 
             Log.d(this.toString(), bundle.toString())
@@ -44,8 +47,8 @@ class HabitAdapter(private val habits: ArrayList<Habit>, private val fragment: F
 
         nameTextView.text = habit.name
         descriptionTextView.text = habit.description
-        priorityTextView.text = habit.priority
-        typeTextView.text = habit.type
+        priorityTextView.text = habit.priority.stringView
+        typeTextView.text = habit.type.stringView
         frequencyTextView.text = holder.itemView.context.getString(R.string.repeats_and_days_view).format(habit.times, habit.days)
     }
 

@@ -1,21 +1,20 @@
-package com.example.myapplication.models.dao
+package com.example.data.room_database
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.myapplication.models.entity.HabitEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface HabitDao {
     @Query("SELECT * FROM habit")
-    fun getAll(): LiveData<List<HabitEntity>>
+    fun getAll(): Flow<List<HabitEntity>>
 
     @Query("SELECT * FROM habit WHERE uid = :id")
-    fun getById(id: Int): LiveData<HabitEntity>
+    fun getById(id: String): Flow<HabitEntity>
 
     @Insert
     fun insert(habit: HabitEntity)

@@ -5,9 +5,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.Habit
-import com.example.myapplication.models.HabitsModel
+import com.example.data.room_database.HabitsModel
+import com.example.domain.HabitsRepository
+import com.example.myapplication.HabitsTracker
 import kotlinx.coroutines.*
 
 class EditHabitViewModel(application: Application) : AndroidViewModel(application) {
@@ -15,15 +18,14 @@ class EditHabitViewModel(application: Application) : AndroidViewModel(applicatio
 
     val habitLiveData: LiveData<Habit?> = mutableHabit
 
-    private val habitsModel: HabitsModel = HabitsModel.getInstance(application)
-    private val viewModelJob = Job()
+    private val habitsRepository: HabitsRepository = (application as HabitsTracker).applicationComponent.getHabitsRepository()
 
-    private fun loadHabits(lifecycleOwner: LifecycleOwner, id: Int?){
+    private fun loadHabits(lifecycleOwner: LifecycleOwner, id: String?){
         if (id != null) {
             viewModelScope.launch { Dispatchers.IO {
-                habitsModel.getHabitsFromServerAndStoreLocally()
+                habitsRepository.getHabitsFromServerAndStoreLocally()
             }}
-            val liveData = habitsModel.getById(id)
+            val liveData = habitsRepository.getById(id).asLiveData()
             liveData.observe(lifecycleOwner) {
                 mutableHabit.value = liveData.value?.let { Habit.fromStorageEntity(it) }
             }
@@ -32,22 +34,17 @@ class EditHabitViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun saveHabit(habit: Habit) {
         viewModelScope.launch(Dispatchers.IO) {
-            habitsModel.add(habit)
+            habitsRepository.add(Habit.toAddDto(habit))
         }
     }
 
     fun editHabit(habit: Habit) {
         viewModelScope.launch(Dispatchers.IO)  {
-            habitsModel.update(habit)
+            habitsRepository.update(Habit.toEntity(habit))
         }
     }
 
-    fun onViewCreated(lifecycleOwner: LifecycleOwner, id: Int?) {
+    fun onViewCreated(lifecycleOwner: LifecycleOwner, id: String?) {
         loadHabits(lifecycleOwner, id)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 }

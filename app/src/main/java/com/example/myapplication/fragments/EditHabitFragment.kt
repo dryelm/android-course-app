@@ -14,6 +14,8 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.Habit
+import com.example.myapplication.HabitPriority
+import com.example.myapplication.HabitType
 import com.example.myapplication.R
 import com.example.myapplication.bundle_keys.BundleKeys
 import com.example.myapplication.view_models.EditHabitViewModel
@@ -21,7 +23,7 @@ import java.time.Instant
 import java.util.Date
 
 class EditHabitFragment : Fragment() {
-    private var id: Int? = null
+    private var id: String? = null
     private lateinit var viewModel: EditHabitViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +44,7 @@ class EditHabitFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (arguments?.containsKey(BundleKeys.id) == true) {
-            id = arguments?.getInt(BundleKeys.id)
+            id = arguments?.getString(BundleKeys.id)
             Log.d(this.toString(), id.toString())
         }
 
@@ -86,16 +88,17 @@ class EditHabitFragment : Fragment() {
                     descriptionEditText.setText(habit?.description)
                     prioritySpinner.setSelection(
                         when (habit?.priority) {
-                            getString(R.string.low_priority_word) -> 0
-                            getString(R.string.medium_priority_word) -> 1
-                            getString(R.string.high_priority_word) -> 2
-                            else -> -1
+                            HabitPriority.LOW -> 0
+                            HabitPriority.MEDIUM -> 1
+                            HabitPriority.HIGH -> 2
+                            else -> 1
                         }
                     )
 
                     when (habit?.type) {
-                        getString(R.string.good_habit_word) -> typeRadioGroup.check(R.id.goodRadioButton)
-                        getString(R.string.bad_habit_word) -> typeRadioGroup.check(R.id.badRadioButton)
+                        HabitType.GOOD -> typeRadioGroup.check(R.id.goodRadioButton)
+                        HabitType.BAD -> typeRadioGroup.check(R.id.badRadioButton)
+                        else -> typeRadioGroup.check(R.id.goodRadioButton)
                     }
 
                     countOfRepeats.setText(habit?.times.toString())
@@ -168,12 +171,16 @@ class EditHabitFragment : Fragment() {
 
             val name = nameEditText.text.toString()
             val description = descriptionEditText.text.toString()
-            val priority =
-                prioritySpinner.selectedItem?.toString() ?: getString(R.string.medium_priority_word)
+            val priority = when (prioritySpinner.selectedItem?.toString()){
+                getString(R.string.low_priority_word) -> HabitPriority.LOW
+                getString(R.string.medium_priority_word) -> HabitPriority.MEDIUM
+                getString(R.string.high_priority_word) -> HabitPriority.HIGH
+                else -> HabitPriority.MEDIUM
+            }
             val type = when (typeRadioGroup.checkedRadioButtonId) {
-                R.id.goodRadioButton -> getString(R.string.good_habit_word)
-                R.id.badRadioButton -> getString(R.string.bad_habit_word)
-                else -> ""
+                R.id.goodRadioButton -> HabitType.GOOD
+                R.id.badRadioButton -> HabitType.BAD
+                else -> HabitType.GOOD
             }
 
 
@@ -185,7 +192,8 @@ class EditHabitFragment : Fragment() {
                 type,
                 daysForHabit.text.toString().toInt(),
                 countOfRepeats.text.toString().toInt(),
-                Date.from(Instant.now())
+                Date.from(Instant.now()),
+                listOf()
             )
 
             if (id != null) {

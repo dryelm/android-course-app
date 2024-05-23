@@ -1,9 +1,10 @@
 plugins {
-
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id ("kotlin-parcelize")
     id("com.google.devtools.ksp")
+    kotlin("plugin.serialization") version "1.6.0"
+    kotlin("kapt")
 }
 
 android {
@@ -33,18 +34,18 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
         viewBinding = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.6"
     }
     packaging {
         resources {
@@ -54,24 +55,20 @@ android {
 }
 
 dependencies {
-    implementation("androidx.room:room-ktx:2.6.1")
-    implementation("com.android.support:support-annotations:28.0.0")
+    implementation(project(":data"))
+    implementation(project(":domain"))
+
+    implementation("com.google.dagger:dagger:2.37")
+    ksp("com.google.dagger:dagger-compiler:2.37")
+
     val roomVersion = "2.6.1"
+    implementation("androidx.room:room-ktx:$roomVersion")
+    implementation("com.android.support:support-annotations:28.0.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.0")
+
+
     implementation("androidx.room:room-runtime:$roomVersion")
-
-
-
-    // To use Kotlin Symbol Processing (KSP)
     ksp("androidx.room:room-compiler:$roomVersion")
-
-    // optional - Guava support for Room, including Optional and ListenableFuture
-    implementation("androidx.room:room-guava:$roomVersion")
-
-    // optional - Test helpers
-    testImplementation("androidx.room:room-testing:$roomVersion")
-
-    // optional - Paging 3 Integration
-    implementation("androidx.room:room-paging:$roomVersion")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
@@ -90,8 +87,8 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
-    implementation("androidx.room:room-common:2.6.1")
-    annotationProcessor("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-common:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

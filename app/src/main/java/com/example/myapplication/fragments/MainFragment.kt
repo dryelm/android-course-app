@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.example.myapplication.HabitType
 import com.example.myapplication.R
 import com.example.myapplication.view_models.HabitsListViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -42,8 +43,8 @@ class MainFragment : Fragment() {
 
         viewModel.habitList.observe(viewLifecycleOwner) { habits ->
             val fragments = listOf(
-                HabitFragment.newInstance(habits!!.filter { it.type == getString(R.string.good_habit_word) }),
-                HabitFragment.newInstance(habits.filter { it.type == getString(R.string.bad_habit_word) })
+                HabitFragment.newInstance(habits!!.filter { it.type == HabitType.GOOD }),
+                HabitFragment.newInstance(habits.filter { it.type == HabitType.BAD })
             )
             activity?.let {
                 viewPager.adapter = object : FragmentStateAdapter(this) {
