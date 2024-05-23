@@ -58,8 +58,9 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
 
-    implementation("com.google.dagger:dagger:2.37")
-    ksp("com.google.dagger:dagger-compiler:2.37")
+    implementation("com.google.dagger:dagger:2.48")
+    ksp("com.google.dagger:dagger-compiler:2.48")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.0")
 
     val roomVersion = "2.6.1"
     implementation("androidx.room:room-ktx:$roomVersion")

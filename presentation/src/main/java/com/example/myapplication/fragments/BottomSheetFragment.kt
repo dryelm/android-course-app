@@ -34,7 +34,7 @@ class BottomSheetFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText != null) habitsListViewModel.onSearchHabits(newText, viewLifecycleOwner)
+                if (newText != null) habitsListViewModel.onSearchHabits(newText)
                 return false
             }
         })

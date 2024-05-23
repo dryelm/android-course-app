@@ -7,7 +7,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [DataModule::class, ContextModule::class])
+@Component(modules = [DataModule::class])
 interface ApplicationComponent {
     fun getHabitsRepository(): HabitsRepository
 
