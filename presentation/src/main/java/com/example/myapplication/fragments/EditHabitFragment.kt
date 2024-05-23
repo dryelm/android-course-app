@@ -12,10 +12,10 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.myapplication.Habit
-import com.example.myapplication.HabitPriority
-import com.example.myapplication.HabitType
+import androidx.fragment.app.viewModels
+import com.example.myapplication.presentation_entities.Habit
+import com.example.myapplication.presentation_entities.HabitPriority
+import com.example.myapplication.presentation_entities.HabitType
 import com.example.myapplication.R
 import com.example.myapplication.bundle_keys.BundleKeys
 import com.example.myapplication.view_models.EditHabitViewModel
@@ -24,13 +24,7 @@ import java.util.Date
 
 class EditHabitFragment : Fragment() {
     private var id: String? = null
-    private lateinit var viewModel: EditHabitViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity())[EditHabitViewModel::class.java]
-
-    }
+    private val viewModel: EditHabitViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,16 +33,12 @@ class EditHabitFragment : Fragment() {
         return inflater.inflate(R.layout.edit_habit_fragment, container, false)
     }
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (arguments?.containsKey(BundleKeys.id) == true) {
             id = arguments?.getString(BundleKeys.id)
             Log.d(this.toString(), id.toString())
         }
-
-        viewModel.onViewCreated(viewLifecycleOwner, id)
 
         configurePrioritySpinner(view)
         fillFieldsWhenEdit(view)
@@ -68,8 +58,6 @@ class EditHabitFragment : Fragment() {
         }
     }
 
-
-
     private fun fillFieldsWhenEdit(view: View) {
         if (id != null) {
             val nameEditText = view.findViewById<AppCompatEditText>(R.id.nameEditText)
@@ -81,7 +69,7 @@ class EditHabitFragment : Fragment() {
             )
             id?.let {
                 val habitLiveData = viewModel.habitLiveData
-                habitLiveData.observe(viewLifecycleOwner) {
+                habitLiveData?.observe(viewLifecycleOwner) {
                     val habit = it
                     Log.d(this.toString(), habit.toString())
                     nameEditText.setText(habit?.name)
@@ -199,7 +187,7 @@ class EditHabitFragment : Fragment() {
             if (id != null) {
                 viewModel.editHabit(habit)
             } else {
-                viewModel.saveHabit(habit)
+                viewModel.addHabit(habit)
             }
 
             parentFragmentManager.popBackStack()

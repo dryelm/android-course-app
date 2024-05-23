@@ -1,4 +1,4 @@
-package com.example.myapplication.fragments
+package com.example.myapplication.fragments.MainFragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.example.myapplication.HabitType
+import com.example.myapplication.presentation_entities.HabitType
 import com.example.myapplication.R
+import com.example.myapplication.fragments.BottomSheetFragment
+import com.example.myapplication.fragments.EditHabitFragment
+import com.example.myapplication.fragments.HabitFragment
 import com.example.myapplication.view_models.HabitsListViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout

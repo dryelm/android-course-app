@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.Habit
-import com.example.myapplication.HabitAdapter
+import com.example.myapplication.presentation_entities.Habit
+import com.example.myapplication.fragments.MainFragment.HabitAdapter
 import com.example.myapplication.R
 import com.example.myapplication.bundle_keys.BundleKeys
 

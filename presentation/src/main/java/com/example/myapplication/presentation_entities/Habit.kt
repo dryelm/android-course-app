@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.presentation_entities
 
 import android.os.Parcelable
 import com.example.domain.entities.HabitAddDto

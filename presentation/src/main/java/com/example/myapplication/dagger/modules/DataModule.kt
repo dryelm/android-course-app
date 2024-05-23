@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.dagger.modules
 
 import android.content.Context
 import androidx.room.Room
@@ -6,6 +6,7 @@ import com.example.data.room_database.HabitDao
 import com.example.data.room_database.HabitsModel
 import com.example.data.room_database.storageApiService.StorageApiService
 import com.example.domain.HabitsRepository
+import com.example.myapplication.AppDatabase
 import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor

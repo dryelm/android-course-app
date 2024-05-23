@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.myapplication.R
 import com.example.myapplication.bundle_keys.BundleKeys
 import com.example.myapplication.fragments.InfoFragment
-import com.example.myapplication.fragments.MainFragment
+import com.example.myapplication.fragments.MainFragment.MainFragment
+import com.example.myapplication.presentation_entities.Habit
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +24,8 @@ class MainActivity : AppCompatActivity() {
         val navigationDrawerLayout = findViewById<DrawerLayout>(R.id.navigationDrawerLayout)
         val drawerToggle = ActionBarDrawerToggle(this, navigationDrawerLayout, toolbar,
             R.string.open_drawer,
-            R.string.close_drawer)
+            R.string.close_drawer
+        )
         navigationDrawerLayout.addDrawerListener(drawerToggle)
 
         drawerToggle.syncState()

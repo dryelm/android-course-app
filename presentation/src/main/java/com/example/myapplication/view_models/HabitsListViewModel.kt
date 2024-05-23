@@ -9,7 +9,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import com.example.myapplication.Habit
+import com.example.myapplication.presentation_entities.Habit
 import com.example.domain.HabitsRepository
 import com.example.myapplication.HabitsTracker
 import kotlinx.coroutines.Dispatchers

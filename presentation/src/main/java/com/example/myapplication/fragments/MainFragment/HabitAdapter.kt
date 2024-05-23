@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.fragments.MainFragment
 
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +9,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.presentation_entities.Habit
+import com.example.myapplication.R
 import com.example.myapplication.bundle_keys.BundleKeys
 import com.example.myapplication.fragments.EditHabitFragment
 
